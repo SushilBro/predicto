@@ -1,0 +1,40 @@
+.hex:before {
+  content: " ";
+  width: 0; height: 0;
+  border-bottom: 60px solid rgb(15, 145, 15);
+  border-left: 118px solid transparent;
+  border-right: 118px solid transparent;
+  position: absolute;
+  top: -55px;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.hex {
+  margin-top: 60px;
+  width: 236px;
+  height: 200px;
+  background-color: rgb(15, 145, 15);
+  position: relative;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+
+
+}
+
+.hex:after {
+  content: "";
+  width: 0;
+  position: absolute;
+  bottom: -55px;
+  border-top: 60px solid rgb(15, 145, 15);
+  border-left: 118px solid transparent;
+  border-right: 118px solid transparent;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+
+}
