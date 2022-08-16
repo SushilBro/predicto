@@ -13,10 +13,13 @@
     "@mui/material": "^5.9.1",
     "@stacks/auth": "^4.3.1",
     "@stacks/connect": "^6.9.0",
+    "@stacks/network": "^4.3.4",
     "next": "latest",
     "react": "18.1.0",
+    "react-card-flip": "^1.1.5",
     "react-dom": "18.1.0",
     "react-use-draggable-scroll": "^0.4.4",
+    "redstone-api": "^0.4.11",
     "regenerator-runtime": "^0.13.9",
     "tailwind-scrollbar-hide": "^1.1.7"
   },

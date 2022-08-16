@@ -1,8 +1,7 @@
 //import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
-import { authenticate } from "../stacksfoundation/auth";
+import { authenticate,userSession } from "../stacksfoundation/auth";
 import { useEffect, useState } from 'react'
-import { userSession } from "../stacksfoundation/auth";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);

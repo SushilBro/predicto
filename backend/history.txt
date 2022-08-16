@@ -1,0 +1,21 @@
+#V2
+(contract-call? ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM check-call(u3))
+(contract-call? ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM check-call (u3))
+(contract-call? ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM check-call u3)
+tx-sender
+(contract-call? ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.clar check-call u3)
+(contract-call? 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM check-call u3)
+(contract-call? .predicto 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM check-call u3)
+(contract-call?  'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.predicto check-call u3)
+burn-block-height
+block-height
+(contract-call? predicto winners)
+(contract-call? STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX.predicto  winners)
+(contract-call? STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX.predicto winners)
+(contract-call? 'STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX.predicto winners)
+tx-sender
+(as-contract 'STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6)
+tx-sender
+contract-caller
+::help
+::list_functions

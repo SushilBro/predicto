@@ -1,16 +1,32 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useDraggable } from 'react-use-draggable-scroll'
 import { Hexagon } from "./hexagon";
 import ReactCardFlip from "react-card-flip";
 import { ArrowBack, ArrowUpward } from "@mui/icons-material";
-import { TextField } from "@mui/material";
+import { bottomNavigationActionClasses, TextField } from "@mui/material";
 import DiscreteSliderLabel from "./slider";
+import { authenticate, userSession } from "../stacksfoundation/auth";
+import redstone from "redstone-api"
+import callContract from "../stacksfoundation/contractCall";
 export default function ScrollableCards() {
     const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
     const { events } = useDraggable(ref);
     const [flip, setFlipped] = useState(false);
+    const [userData, setUserData] = useState({});
+    const [loggedIn, setLoggedIn] = useState(false);
+    useEffect(() => {
+        if (userSession.isSignInPending()) {
+            userSession.handlePendingSignIn().then((userData) => {
+                setUserData(userData);
+            })
+        }
+        else if (userSession.isUserSignedIn()) {
+            setLoggedIn(true);
+            setUserData(userSession.loadUserData());
+        }
+    }, []);
 
-    const flipCard = (e) => {
+    const flipCard = (e:any) => {
         e.preventDefault();
         if (flip) {
             setFlipped(false)
@@ -74,7 +90,9 @@ export default function ScrollableCards() {
                         <div className='w-72 h-40 border-2 rounded-xl -ml-6 bg-black border-green-300'>
                             <div className="">
                                 <h1 className='ml-3 mt-3 text-white font-bold inline-block'>Prize Pool</h1>
-                                <h1 className='ml-24 text-white font-bold inline-block'>4.747 Cake</h1>
+                                {/* <h1 className='ml-24 text-white font-bold inline-block'>{}</h1> */}
+                                <Bitcoinprize></Bitcoinprize>
+                                
                             </div>
                             <button onClick={flipCard} className="text-white mt-3 py-2 px-24 ml-3 font-bold mb-2 text-center rounded-lg bg-green-400 none">Enter UP</button>
                             <button onClick={flipCard} className="text-white py-2 px-20 ml-3 font-bold mb-2 text-center rounded-lg bg-pink-500">Enter DOWN</button>
@@ -98,10 +116,13 @@ export default function ScrollableCards() {
                         <h1 className="text-white font-bold mr-16 inline">Cake</h1>
                     </div>
 
-                    <TextField color="primary" inputProps={{ style: { color: 'white' } }} type='number' placeholder="0.0" className="ml-6 bg-gray-600 rounded-2xl w-10/12"></TextField>
+                    <TextField color="primary"  disabled={!loggedIn} inputProps={{ style: { color: 'white' } }} type='number' placeholder="0.0" className="disabled: hover: cursor-not-allowed ml-6 bg-gray-600 rounded-2xl w-10/12"></TextField>
                     <label className="text-white ml-48">Balance: 0.0</label>
-                    <DiscreteSliderLabel/>
-                    <button onClick={flipCard} className="text-white py-2 px-20 ml-12 font-bold mb-2 text-center rounded-lg bg-green-500">Enable</button>
+                    <DiscreteSliderLabel />
+                    {(loggedIn ?
+                        <button onClick={callContract} className="text-white py-2 px-20 ml-12 font-bold mb-2 text-center rounded-lg bg-green-500">Enable</button>
+                        : <button onClick={authenticate} className="text-white py-2 px-20 ml-12 font-bold mb-2 text-center rounded-lg bg-green-500">Sign In</button>
+                    )}
                     <p className="text-white mx-4">You won't be able to remove or change your position once you enter it.</p>
                 </div>
             </ReactCardFlip>
@@ -138,3 +159,15 @@ export function ClosedPrice() {
         </div>
     );
 }
+export function Bitcoinprize(){
+    const [bitvalue,setBitvalue]= useState(0);
+    useEffect(()=>{
+        setTimeout(async ()=>{
+            setBitvalue((await redstone.getPrice("BTC")).value)
+        },100)
+    },[])
+    return <h1 className="text-white">{bitvalue}</h1>
+    
+}
+ 
+

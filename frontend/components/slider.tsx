@@ -31,7 +31,7 @@ function valuetext(value: number) {
 
 export default function DiscreteSliderLabel() {
   return (
-    <Box sx={{color: 'white',width:'80%', fontSize: 34, fontWeight: 'medium' }} className="ml-5 ">
+    <Box sx={{color: 'white',width:'80%', fontSize: 34, fontWeight: 'medium' }} className="ml-8 ">
       <Slider
       sx={{}}
         aria-label="Always visible"
