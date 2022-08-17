@@ -19,3 +19,42 @@ tx-sender
 contract-caller
 ::help
 ::list_functions
+(contract-call? .predicto check-play tx-sender u2000000 true)
+tx-sender
+contract-caller
+(contract-call? .predicto check-play 'STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX u2000000 true)
+(is-eq tx-sender 'STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX)
+tx-sender
+(contract-call? .predicto check-play tx-sender u2000000 true)
+tx-sender
+(stx-get-balance tx-sender)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(stx-get-balance tx-sender)
+(map-get? predictors tx-sender)
+(var-get counter)
+(contract-call? .predicto var-get counter)
+(contract-call? .predicto get-count)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(contract-call? .predicto get-count)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(contract-call? .predicto predictor tx-sender)
+(contract-call? .predicto map-data tx-sender)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(contract-call? .predicto map-data tx-sender)
+(contract-call? .predicto check-play 'ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP u2000000 true)
+(contract-call? .predicto check)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(contract-call? .predicto check)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(contract-call? .predicto check)
+(contract-call? .predicto check-play tx-sender u2000000 true)
+(contract-call? .predicto prediction-result false u20)
+(contract-call? .predicto check-play tx-sender u2000000 false)
+(contract-call? .predicto prediction-result false u20)
+(contract-call? .predicto check-play tx-sender u2000000 false)
+(contract-call? .predicto prediction-result false u20)
+(contract-call? .predicto check-play tx-sender u2000000 false)
+(contract-call? .predicto prediction-result false u20)
+(contract-call? .predicto check-play tx-sender u2000000 false)
+(contract-call? .predicto prediction-result false u10000)
+(contract-call? .predicto prediction-result true u10000)
