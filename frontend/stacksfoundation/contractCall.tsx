@@ -1,14 +1,32 @@
 import { openContractCall } from "@stacks/connect";
 import { StacksMocknet } from "@stacks/network";
 import { authenticate, userSession } from "./auth";
-import { uintCV, FungibleConditionCode, makeStandardSTXPostCondition } from "@stacks/transactions";
+import { uintCV, FungibleConditionCode, makeStandardSTXPostCondition,standardPrincipalCV,trueCV,falseCV } from "@stacks/transactions";
+import { predict, amount } from "../components/scrollableCards";
 export default async function callContract() {
-    const contractAddress = 'STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX';
+     const contractAddress = 'STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX';
+    // const contractAddress = userSession.loadUserData().profile.stxAddress;
     const contractName = 'predicto';
     const network = new StacksMocknet;
+    const predictorAddress= 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+    const bettingAmount= amount;
+    const prediction= trueCV();
+    const cPredictorAddress=standardPrincipalCV(contractAddress)
+    const cBettingAmount=uintCV(bettingAmount)
+    console.log(amount)
     const token = 3
     const tok = uintCV(token)
-    const functionArgs = [tok]
+    const tf=()=>{
+        const t=trueCV()
+        const f=falseCV()
+        if(predict){
+            return t;
+        }
+        else{
+            return f;
+        }
+    }
+    const functionArgs = [cPredictorAddress,cBettingAmount,tf()]
     const postConditionAddress = userSession.loadUserData().profile.stxAddress.testnet;
     const postConditionCode = FungibleConditionCode.LessEqual;
     const postConditionAmount = 1000000;
@@ -19,10 +37,11 @@ export default async function callContract() {
             postConditionAmount
         ),
     ];
+    
 
     const options = {
         contractAddress,
-        functionName: "check-call",
+        functionName: "check-play",
         contractName,
         functionArgs,
         network,

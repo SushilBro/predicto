@@ -30,6 +30,7 @@
         (var-set total-up-prediction (+ (var-get total-down-prediction) amount))
     )
     (var-set total-amount (+ (var-get total-amount) amount))
+
     (ok true))
 )
 
@@ -56,6 +57,7 @@
         (predicted-amount (unwrap-panic (get amount (map-get? predictors tx-sender)))))
         (if (is-eq status predicted-bool) 
             (ok (- (* (/ predicted-amount (var-get total-up-prediction)) (var-get total-down-prediction)) (unwrap-panic (deduct-fee))))
+            
             (ok u20)
         )
     )
