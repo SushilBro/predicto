@@ -30,7 +30,6 @@
         (var-set total-up-prediction (+ (var-get total-down-prediction) amount))
     )
     (var-set total-amount (+ (var-get total-amount) amount))
-
     (ok true))
 )
 

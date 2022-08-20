@@ -162,7 +162,10 @@ export default function ScrollableCards() {
                         <h1 className="text-white font-bold mr-16 inline">Cake</h1>
                     </div>
 
-                    <TextField color="primary" disabled={!loggedIn} onChange={handleOnChange} inputProps={{ style: { color: 'white' } }} type='number' placeholder="0.0" className="disabled: hover: cursor-not-allowed ml-6 bg-gray-600 rounded-2xl w-10/12"></TextField>
+                    <TextField color="primary" disabled={!loggedIn} onChange={handleOnChange}
+                        InputProps={{inputProps: {min: 0 }, style: { color: 'white' } }} type='number' defaultValue={0} 
+                         className="disabled: hover: cursor-not-allowed ml-6 bg-gray-600 rounded-2xl w-10/12"
+                    />
                     <label className="text-white ml-48">Balance: 0.0</label>
                     <DiscreteSliderLabel />
                     {(loggedIn ?
