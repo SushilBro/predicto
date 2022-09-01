@@ -6,6 +6,8 @@ import Nav from '../components/Nav'
 import ScrollableCards from '../components/scrollableCards'
 import ReactReuseableDialog from '../components/CustomDialog'
 import Footer from '../components/footer';
+import { LineGraph } from '../components/linegraph';
+import { price } from '../components/linegraph';
 const Home: NextPage = () => {
   const [open, setOpen] = useState(false);
 
@@ -23,7 +25,9 @@ const Home: NextPage = () => {
     <Nav/>
     <ScrollableCards/>
     <ReactReuseableDialog handleOpen={open} handleClose={handleClose}></ReactReuseableDialog>
-    <button onClick={handleClickOpen}>Open Dialog</button>
+    {/* <button onClick={handleClickOpen}>Open Dialog</button> */}
+    <button onClick={price}>Open Dialog</button>
+    <LineGraph/>
     <Footer/>
     </div>
   )

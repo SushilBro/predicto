@@ -8,8 +8,9 @@ import DiscreteSliderLabel from "./slider";
 import { authenticate, userSession } from "../stacksfoundation/auth";
 import redstone from "redstone-api"
 import callContract from "../stacksfoundation/contractCall";
-export let predict=true;
-export let amount="";
+import { autoCall } from "../stacksfoundation/contractCall";
+export let predict = true;
+export let amount = "";
 export default function ScrollableCards() {
     const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
     const { events } = useDraggable(ref);
@@ -17,8 +18,8 @@ export default function ScrollableCards() {
     const [userData, setUserData] = useState({});
     let [up_down, setUPDown] = useState(true);
     const [loggedIn, setLoggedIn] = useState(false);
-    const handleOnChange=(event:any)=>{
-        amount=event.target.value;
+    const handleOnChange = (event: any) => {
+        amount = event.target.value;
         parseInt(amount)
     }
     useEffect(() => {
@@ -32,25 +33,25 @@ export default function ScrollableCards() {
             setUserData(userSession.loadUserData());
         }
     }, []);
-    const setUP=(e:any)=>{
+    const setUP = (e: any) => {
         flipCard();
         if (up_down) {
             setUPDown(false)
         }
-        up_down=true
-        predict=true;
+        up_down = true
+        predict = true;
         console.log(predict)
-        
+
     }
-    const setDown=(e:any)=>{
+    const setDown = (e: any) => {
         flipCard()
-        if(!up_down) {
+        if (!up_down) {
             setUPDown(true)
         }
-        predict=false;
-        up_down=false
+        predict = false;
+        up_down = false
         console.log(predict)
-        
+
     }
 
     const flipCard = () => {
@@ -65,15 +66,32 @@ export default function ScrollableCards() {
     const changePredict = () => {
         if (up_down) {
             setUPDown(false)
-            predict=true;
+            predict = true;
             console.log(predict)
         }
-        else if(!up_down) {
+        else if (!up_down) {
             setUPDown(true)
-            predict=false;
+            predict = false;
             console.log(predict)
         }
     }
+    let prices: number[] = [];
+    let timestamp: number[] = [];
+    const price = async () => {
+        const times = [5, 10, 15, 20, 25, 30];
+        prices = [];
+        timestamp = [];
+        for (let i = 0; i < times.length; i++) {
+            let getValue = await redstone.query().symbol('BTC').hoursAgo(times[i] / 60).exec()
+            let getTime = getValue.timestamp
+            prices.push(getValue.value)
+            timestamp.push(getTime)
+        }
+        console.log(prices)
+        console.log(timestamp)
+        // return prices
+    }
+
     return (
         <div
             className="flex max-w-full mt-20 space-x-3 overflow-x-scroll scrollbar-hide "
@@ -118,6 +136,7 @@ export default function ScrollableCards() {
                     <div className='w-72 h-40 border-2 rounded-xl -ml-6 bg-black border-green-300'>
                         <h1 className='ml-3 text-white'>Last Price</h1>
                         <ClosedPrice />
+                        <button className="text-white bg-red-800" onClick={price}>check backend</button>
                     </div>
                 </Hexagon>
             </div>
@@ -163,8 +182,8 @@ export default function ScrollableCards() {
                     </div>
 
                     <TextField color="primary" disabled={!loggedIn} onChange={handleOnChange}
-                        InputProps={{inputProps: {min: 0 }, style: { color: 'white' } }} type='number' defaultValue={0} 
-                         className="disabled: hover: cursor-not-allowed ml-6 bg-gray-600 rounded-2xl w-10/12"
+                        InputProps={{ inputProps: { min: 0 }, style: { color: 'white' } }} type='number' defaultValue={0}
+                        className="disabled: hover: cursor-not-allowed ml-6 bg-gray-600 rounded-2xl w-10/12"
                     />
                     <label className="text-white ml-48">Balance: 0.0</label>
                     <DiscreteSliderLabel />
@@ -210,13 +229,13 @@ export function ClosedPrice() {
 }
 export function Bitcoinprize() {
     const [bitvalue, setBitvalue] = useState(0);
+    const [time, setTime] = useState();
     useEffect(() => {
         setTimeout(async () => {
             setBitvalue((await redstone.getPrice("BTC")).value)
         }, 100)
     }, [])
     return <h1 className="text-white">{bitvalue}</h1>
-
 }
 
 
