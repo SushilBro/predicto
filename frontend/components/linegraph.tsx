@@ -27,8 +27,6 @@ ChartJS.register(
 let prices: number[] = [];
 let timestamp: number[] = [];
 // const a =price().then((value)=>{return value});
-const labels = ['January', 'February', 'March', 'April', 'May', 'June'];
-const check = [20234.956181999998, 20263.631916, 20285.79421531, 20261.066497, 20212.79175, 20148.724432]
 export function LineGraph() {
   const [charttime, setChartTime] = useState({})
   const [chartprice, setChartprice] = useState({})
@@ -70,7 +68,7 @@ export function LineGraph() {
 
   useEffect(() => {
     const price = async () => {
-      const times = [30, 25, 20, 15, 10, 5];
+      const times = [60,55,50,45,40,35,30, 25, 20, 15, 10, 5];
       prices = [];
       timestamp = [];
       for (let i = 0; i < times.length; i++) {
@@ -99,12 +97,13 @@ export function LineGraph() {
     }),
     datasets: [
       {
-        label: 'Dataset',
+        label: 'Price',
         data: chartprice,
         fill:true,
         lineTension: 0.8,
         borderColor: 'rgb(74 222 128)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        
       },
     ],
   };

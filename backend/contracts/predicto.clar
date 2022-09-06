@@ -20,7 +20,7 @@
 ;;
 
 (define-private (deduct-fee) 
-(ok (* (/ (scale-up u5) u100) (var-get total-amount))))
+(ok (scale-down (* (/ (scale-up u5) u100) (var-get total-amount)))))
 
 ;; UTILITIES
 ;; CREDIT: math functions taken from Alex math-fixed-point-16.clar
@@ -62,8 +62,8 @@
         (predicted-amount (unwrap-panic (get amount (map-get? predictors tx-sender)))))
         (if (is-eq status predicted-bool) 
             (if (is-eq status true) 
-                (ok (scale-down (- (* (/ (scale-up predicted-amount) (var-get total-up-prediction)) (var-get total-down-prediction)) (unwrap-panic (deduct-fee)))))
-                (ok (scale-down (- (* (/ (scale-up predicted-amount) (var-get total-down-prediction)) (var-get total-up-prediction)) (unwrap-panic (deduct-fee)))))
+                (ok (scale-down (* (/ (scale-up predicted-amount) (var-get total-up-prediction)) (- (var-get total-down-prediction) (unwrap-panic (deduct-fee))))))
+                (ok (scale-down (* (/ (scale-up predicted-amount) (var-get total-down-prediction)) (- (var-get total-up-prediction) (unwrap-panic (deduct-fee))))))
             )
             (ok u200)
         )
