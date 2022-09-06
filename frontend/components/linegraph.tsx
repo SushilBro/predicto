@@ -77,8 +77,8 @@ export function LineGraph() {
         timestamp.push(getTime)
         prices.push(getValue.value)
       }
-      console.log(prices)
-      console.log(timestamp)
+      // console.log(prices)
+      // console.log(timestamp)
       // return prices
       // setChartTime(timestamp)
       setChartprice(prices)
