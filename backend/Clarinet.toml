@@ -10,6 +10,10 @@ boot_contracts = ["pox", "costs-v2", "bns"]
 path = "contracts/predicto.clar"
 depends_on = []
 
+[contracts.predicto-trait]
+path = "contracts/predicto-trait.clar"
+depends_on = []
+
 [repl]
 costs_version = 2
 parser_version = 2
@@ -19,6 +23,6 @@ passes = ["check_checker"]
 
 [repl.analysis.check_checker]
 strict = false
-trusted_sender = false
-trusted_caller = false
-callee_filter = false
+trusted_sender = true
+trusted_caller = true
+callee_filter = true

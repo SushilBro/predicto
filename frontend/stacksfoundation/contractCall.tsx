@@ -5,14 +5,14 @@ import { uintCV, FungibleConditionCode, makeStandardSTXPostCondition, standardPr
 import { predict, amount } from "../components/scrollableCards";
 import redstone from "redstone-api"
 export default async function callContract() {
-    //  const contractAddress = 'STH4FEPVGPZ82GHCT7K0ZTCQRXXYPYM21JDFC5GX';
-    const contractAddress = userSession.loadUserData().profile.stxAddress.testnet;
+     const contractAddress = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
+     const paramAddress = userSession.loadUserData().profile.stxAddress.testnet;
     console.log(contractAddress)
     const contractName = 'predicto';
     const network = new StacksMocknet;
     const predictorAddress = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
     const bettingAmount = amount;
-    const cPredictorAddress = standardPrincipalCV(contractAddress)
+    const cPredictorAddress = standardPrincipalCV(paramAddress)
     const cBettingAmount = uintCV(bettingAmount)
     console.log(amount)
     const tf = () => {
@@ -28,7 +28,7 @@ export default async function callContract() {
     const functionArgs = [cPredictorAddress, cBettingAmount, tf()]
     const postConditionAddress = userSession.loadUserData().profile.stxAddress.testnet;
     const postConditionCode = FungibleConditionCode.LessEqual;
-    const postConditionAmount = 1000000;
+    const postConditionAmount = +amount*1000000;
     const postConditions = [
         makeStandardSTXPostCondition(
             postConditionAddress,
@@ -40,7 +40,7 @@ export default async function callContract() {
 
     const options = {
         contractAddress,
-        functionName: "check-play",
+        functionName: "play-game",
         contractName,
         functionArgs,
         network,
