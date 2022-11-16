@@ -19,6 +19,7 @@
     "react": "18.1.0",
     "react-card-flip": "^1.1.5",
     "react-chartjs-2": "^4.3.1",
+    "react-countdown-circle-timer": "^3.0.9",
     "react-dom": "18.1.0",
     "react-use-draggable-scroll": "^0.4.4",
     "redstone-api": "^0.4.11",

@@ -1,4 +1,3 @@
-;; (use-trait predicto-trait .predicto-trait.predicto-trait)
 ;; constants
 ;;
 (define-constant contract-owner tx-sender)
@@ -11,11 +10,21 @@
 (define-data-var total-down-prediction uint u0)
 (define-data-var total-up-prediction uint u0)
 (define-map predictors principal { up-down: bool, amount: uint })
+
+(define-map calulation-data uint { total-amount: uint, total-down-prediction: uint, total-up-prediction: uint })
+
 (define-data-var amount-with-dust uint u0)
 (define-data-var collect-dust uint u0)
 (define-data-var result bool true)
 
+(define-read-only (check) 
+(begin  
+(print (var-get total-amount) )    
+(print (var-get total-down-prediction))    
+(print (var-get total-up-prediction))    
 
+)
+)
 
 ;; private functions
 ;;
@@ -62,7 +71,6 @@
     (let ((owner tx-sender)) 
       (begin
         (as-contract (transfer amount (as-contract tx-sender) owner))
-        
       ) 
     )
 )
@@ -88,9 +96,6 @@
 )
 
 
-(define-read-only (get-count) 
-    (var-get total-amount)
-)
 
 (define-read-only (map-data (predictor principal))
     (map-get? predictors predictor)
@@ -100,23 +105,30 @@
 (define-public (prediction-result (status bool))
     (ok (var-set result status))
 )
-
+     
 (define-public (claim-amount (status bool)) 
     (let ((predicted-bool (unwrap! (get up-down (map-get? predictors tx-sender)) (err PLAYER-INVALID)))
         (predicted-amount (unwrap! (get amount (map-get? predictors tx-sender)) (err PLAYER-INVALID))))
+        (asserts! (and (> (var-get total-up-prediction) u0) (> (var-get total-down-prediction) u0)) (err u3))
         (if (is-eq status predicted-bool) 
             (if (is-eq status true) 
                 (let ((win (scale-down (* (/ (scale-up predicted-amount) (var-get total-up-prediction)) (- (var-get total-down-prediction) (unwrap-panic (deduct-fee)))))))
                     (try! (transfer-stx-from-escrow (+ win predicted-amount)))
+                    (map-delete predictors tx-sender)
                     (ok (+ win predicted-amount))
                  )
                  (let ((win (scale-down (* (/ (scale-up predicted-amount) (var-get total-down-prediction)) (- (var-get total-up-prediction) (unwrap-panic (deduct-fee))))))) 
                     (try! (transfer-stx-from-escrow (+ win predicted-amount)))
+                    (map-delete predictors tx-sender)
                     (ok (+ win predicted-amount))
                  )
                 
             )
-            (ok u0)
+            (begin 
+                (map-delete predictors tx-sender)
+                (ok u0)
+            )
+            
         )
     )
 )
